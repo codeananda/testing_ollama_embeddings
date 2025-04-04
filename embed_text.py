@@ -6,7 +6,7 @@ from loguru import logger
 from tqdm import tqdm
 
 
-def main(use_cpu: bool = False):
+def main(use_cpu: bool = False, sequential: bool = False):
 
     with open("book-war-and-peace.txt", "r") as f:
         text = f.read()
@@ -14,6 +14,11 @@ def main(use_cpu: bool = False):
     sentences = text.split(".")
 
     model = "nomic-embed-text-cpu" if use_cpu else "nomic-embed-text"
+
+    if sequential:
+        for sentence in tqdm(sentences, unit="sentence"):
+            ollama.embeddings(model=model, prompt=sentence)
+        return
 
     with ThreadPoolExecutor() as executor:
         futures = [
