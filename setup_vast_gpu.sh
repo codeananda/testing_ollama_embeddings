@@ -7,9 +7,6 @@ ollama pull nomic-embed-text
 pip install --upgrade pip
 pip install ollama pandas tqdm loguru fire
 
-git clone https://github.com/mmcky/nyu-econ-370.git
-cp nyu-econ-370/notebooks/data/book-war-and-peace.txt .
-
 # Create GPU version of nomic-embed-text
 ollama show nomic-embed-text --modelfile > modelfile.txt
 echo "PARAMETER num_gpu 0" >> modelfile.txt
