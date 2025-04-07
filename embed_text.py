@@ -14,6 +14,7 @@ def main(
     use_cpu: bool = False,
     sequential: bool = False,
 ):
+    logger.info(f"Mode: {mode}, use_cpu: {use_cpu}, sequential: {sequential}")
 
     with open("book-war-and-peace.txt", "r") as f:
         text = f.read()
@@ -34,6 +35,7 @@ def _embed_with_nomic(sentences, sequential, use_cpu):
 
 
 def _embed_with_ollama(sentences, sequential, use_cpu):
+    logger.info("Embedding with ollama")
     model = "nomic-embed-text-cpu" if use_cpu else "nomic-embed-text"
     if sequential:
         for sentence in tqdm(sentences, unit="sentence"):
