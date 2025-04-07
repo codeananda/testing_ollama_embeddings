@@ -22,18 +22,20 @@ def main(use_cpu: bool = False, sequential: bool = False):
     if sequential:
         for sentence in tqdm(sentences, unit="sentence"):
             ollama.embeddings(model=model, prompt=sentence)
-        return
+    else:
 
-    with ThreadPoolExecutor() as executor:
-        futures = [
-            executor.submit(ollama.embeddings, model=model, prompt=sentence)
-            for sentence in sentences
-        ]
-        for future in tqdm(as_completed(futures), total=len(futures), unit="sentence"):
-            try:
-                result = future.result()
-            except Exception as e:
-                logger.error(f"Error: {e}")
+        with ThreadPoolExecutor() as executor:
+            futures = [
+                executor.submit(ollama.embeddings, model=model, prompt=sentence)
+                for sentence in sentences
+            ]
+            for future in tqdm(
+                as_completed(futures), total=len(futures), unit="sentence"
+            ):
+                try:
+                    result = future.result()
+                except Exception as e:
+                    logger.error(f"Error: {e}")
 
 
 if __name__ == "__main__":
