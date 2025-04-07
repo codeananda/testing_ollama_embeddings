@@ -4,6 +4,7 @@ from typing import Literal
 import ollama
 from fire import Fire
 from loguru import logger
+from nomic import embed
 from pydantic import validate_call
 from tqdm import tqdm
 
@@ -31,7 +32,20 @@ def main(
 
 
 def _embed_with_nomic(sentences, sequential, use_cpu):
-    pass
+    logger.info("Embedding with nomic")
+    device = None if use_cpu else "gpu"
+
+    if not sequential:
+        logger.warning("Parallel mode is not supported for nomic. Using sequential.")
+
+    params = {
+        "model": "nomic-embed-text-v1.5",
+        "task_type": "search_document",
+        "inference_mode": "local",
+        "device": device,
+    }
+
+    embed.text(sentences, **params)
 
 
 def _embed_with_ollama(sentences, sequential, use_cpu):
