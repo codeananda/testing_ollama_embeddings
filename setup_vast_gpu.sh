@@ -5,7 +5,7 @@ sudo apt update && sudo apt upgrade -y && sudo apt install btop -y
 ollama pull nomic-embed-text
 
 pip install --upgrade pip
-pip install ollama pandas tqdm loguru fire
+pip install ollama pandas tqdm loguru fire nomic[local]
 
 # Create GPU version of nomic-embed-text
 ollama show nomic-embed-text --modelfile > modelfile.txt
