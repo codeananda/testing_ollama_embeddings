@@ -6,8 +6,6 @@ from fire import Fire
 from loguru import logger
 from tqdm import tqdm
 
-os.environ['OLLAMA_NUM_PARALLEL'] = str(os.cpu_count())
-os.environ['OLLAMA_MAX_LOADED_MODELS'] = str(os.cpu_count())
 
 
 def main(use_cpu: bool = False, sequential: bool = False):
