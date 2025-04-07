@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "testing-ollama-embeddings"
+version = "0.1.0"
+description = ""
+authors = ["Adam Murphy <adamdmurphy4@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.13"
+ollama = "^0.4.7"
+pandas = "^2.2.3"
+tqdm = "^4.67.1"
+loguru = "^0.7.3"
+fire = "^0.7.0"
+black = "^25.1.0"
+nomic = {extras = ["local"], version = "^3.4.1"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
