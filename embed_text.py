@@ -1,22 +1,40 @@
-import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Literal
 
 import ollama
 from fire import Fire
 from loguru import logger
+from pydantic import validate_call
 from tqdm import tqdm
 
 
-
-def main(use_cpu: bool = False, sequential: bool = False):
+@validate_call
+def main(
+    mode: Literal["nomic", "ollama"] = "nomic",
+    use_cpu: bool = False,
+    sequential: bool = False,
+):
 
     with open("book-war-and-peace.txt", "r") as f:
         text = f.read()
 
     sentences = text.split(".")
 
-    model = "nomic-embed-text-cpu" if use_cpu else "nomic-embed-text"
+    match mode:
+        case "nomic":
+            _embed_with_nomic(sentences, sequential, use_cpu)
+        case "ollama":
+            _embed_with_ollama(sentences, sequential, use_cpu)
+        case _:
+            raise ValueError(f"Invalid mode: {mode}")
 
+
+def _embed_with_nomic(sentences, sequential, use_cpu):
+    pass
+
+
+def _embed_with_ollama(sentences, sequential, use_cpu):
+    model = "nomic-embed-text-cpu" if use_cpu else "nomic-embed-text"
     if sequential:
         for sentence in tqdm(sentences, unit="sentence"):
             ollama.embeddings(model=model, prompt=sentence)
